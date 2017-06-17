@@ -4,11 +4,15 @@ import mongoose from 'mongoose';
 
 // Create Base Repository to template database access
 // This outlines the 'controller callback functions'
+
+// Database queries defined here Defining the CRUD
+
 class BaseRepository {
   constructor(model){
     this.model = model;
   }
 
+  // Get Single
   findById(id) {
     return Rx.Observable.create((subscription) => {
       this.model.findById({_id: id}, (err, results) => {
@@ -22,9 +26,9 @@ class BaseRepository {
     });
   }
 
-  // Define Database call
+  // Get All
   find(query) {
-    // Create Observable
+  // Create Observable
     return Rx.Observable.create((subscription) => {
       // Act on Model from constructor
       this.model.find(query, (err, results) => {
@@ -34,9 +38,15 @@ class BaseRepository {
           subscription.next(results);
           subscription.complete();
         }
-      })
-    })
+      });
+    });
   }
+
+  // Add new
+  save(model) {
+    return Rx.Observable.fromPromise(model.save());
+  }
+
 }
 
 export default BaseRepository;
