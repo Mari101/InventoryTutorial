@@ -1,27 +1,40 @@
 import mongoose from 'mongoose';
+import AlbumRepository from '../repositories/AlbumRepository';
 
 const Album = mongoose.model('Album');
 
 // Get Albums
 module.exports.getAlbums = (req, res) => {
-  Album.find({}, (err, albums) => {
-    if (err) {
-      res.staus(500).json({message: 'Error' + err });
-      return;
-    }
+// Redefine with the Repository
+  AlbumRepository.find().subscribe((albums) => {
     res.json(albums);
+  }, (err) => {
+    res.status(500).json({message: 'Error' + err });
   })
+
+//   Album.find({}, (err, albums) => {
+//     if (err) {
+//       res.status(500).json({message: 'Error' + err });
+//       return;
+//     }
+//     res.json(albums);
+//   })
 }
 
 // Get Single Album
 module.exports.getAlbum = (req, res) => {
-  Album.findById({_id: req.params.id}, (err, album) => {
-    if (err) {
-      res.status(500).json({message: `Error ${err}`})
-      return;
-    }
+  AlbumRepository.findById(req.params.id).subscribe((album) => {
     res.json(album)
+  }, (err) => {
+    res.status(500).json({message: `Error ${err}`})
   })
+  // Album.findById({_id: req.params.id}, (err, album) => {
+  //   if (err) {
+  //     res.status(500).json({message: `Error ${err}`})
+  //     return;
+  //   }
+  //   res.json(album)
+  // })
 }
 
 // Add Album
