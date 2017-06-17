@@ -1,3 +1,6 @@
+#Inventory
+npm install
+
 Database to store :
   Release Date
   Recorded
