@@ -12,39 +12,68 @@ class BaseRepository {
     this.model = model;
   }
 
-  // Get Single
-  findById(id) {
-    return Rx.Observable.create((subscription) => {
-      this.model.findById({_id: id}, (err, results) => {
-        if (err) {
-          subscription.error(err);
-        } else {
-          subscription.next(results);
-          subscription.complete();
-        }
-      });
-    });
+  // Add New
+  save(model) {
+    return Rx.Observable.fromPromise(model.save());
   }
 
   // Get All
   find(query) {
   // Create Observable
-    return Rx.Observable.create((subscription) => {
+    return Rx.Observable.create((observer) => {
       // Act on Model from constructor
       this.model.find(query, (err, results) => {
         if (err) {
-          subscription.error(err);
+          observer.error(err);
         } else {
-          subscription.next(results);
-          subscription.complete();
+          observer.next(results);
+          observer.complete();
         }
       });
     });
   }
 
-  // Add new
-  save(model) {
-    return Rx.Observable.fromPromise(model.save());
+
+  // Get Single By Id
+  findById(id) {
+    return Rx.Observable.create((observer) => {
+      this.model.findById({_id: id}, (err, results) => {
+        if (err) {
+          observer.error(err);
+        } else {
+          observer.next(results);
+          observer.complete();
+        }
+      });
+    });
+  }
+
+  // Update
+  update(id, body) {
+    return Rx.Observable.create(observer => {
+      this.model.update({_id: id}, body, (err, results) => {
+        if (err) {
+          observer.error(err);
+        } else {
+          observer.next(results);
+          observer.complete();
+        }
+      });
+    });
+  }
+
+  // Delete
+  delete(id) {
+    return Rx.Observable.create(observer => {
+      this.model.remove({_id: id}, (err, results) => {
+        if (err) {
+          observer.error(err);
+        } else {
+          observer.next(results);
+          observer.complete();
+        }
+      });
+    });
   }
 
 }

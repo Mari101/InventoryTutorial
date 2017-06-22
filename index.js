@@ -10,19 +10,19 @@ import morgan from 'morgan';
 // Connect to Database
 mongoose.connect(process.env.MONGODB, (err) => {
   if (err) {
-    console.log("Error", err)
+    console.log("Error", err);
     return;
   }
   console.log("Connected to Intentory :", process.env.MONGODB);
 })
 
 // Start Express App
-const port = process.env.PORT
+const port = process.env.PORT;
 const app = express();
 
 // Models
-const Album = require('./models/album')
-const User = require('./models/user')
+const Album = require('./models/album');
+const User = require('./models/user');
 
 // Middleware
 app.use(bodyParser.json());
@@ -32,9 +32,9 @@ app.use(morgan('combined'));
 
 // Authentication Middleware pass secret as an object
 // Automatically makes a token necessary
-app.use(expressJwt({secret: process.env.SECRET}).unless({path:['/login','/register']}))
+app.use(expressJwt({secret: process.env.SECRET}).unless({path:['/login','/register']}));
 
-require('./routes')(app)
+require('./routes')(app);
 
 app.get('/', (req, res) => {
   res.send('Invalid API endpoint');

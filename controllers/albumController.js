@@ -3,40 +3,6 @@ import AlbumRepository from '../repositories/AlbumRepository';
 
 const Album = mongoose.model('Album');
 
-// Get Albums
-module.exports.getAlbums = (req, res) => {
-// Redefine with the Repository
-  AlbumRepository.find().subscribe((albums) => {
-    res.json(albums);
-  }, (err) => {
-    res.status(500).json({message: 'Error' + err });
-  })
-
-//   Album.find({}, (err, albums) => {
-//     if (err) {
-//       res.status(500).json({message: 'Error' + err });
-//       return;
-//     }
-//     res.json(albums);
-//   })
-}
-
-// Get Single Album
-module.exports.getAlbum = (req, res) => {
-  AlbumRepository.findById(req.params.id).subscribe((album) => {
-    res.json(album)
-  }, (err) => {
-    res.status(500).json({message: `Error ${err}`})
-  })
-  // Album.findById({_id: req.params.id}, (err, album) => {
-  //   if (err) {
-  //     res.status(500).json({message: `Error ${err}`})
-  //     return;
-  //   }
-  //   res.json(album)
-  // })
-}
-
 // Add Album
 module.exports.addAlbum = (req, res) => {
   if (!req.body.title) {res.status(400).json({message: "enter a release title"}); return; }
@@ -59,14 +25,32 @@ module.exports.addAlbum = (req, res) => {
     artist: req.body.artist
   });
 
-  album.save( (err) => {
-    if (err) {
-      res.staus(500).json({message: 'Error' + err })
-      return ;
-    }
+  AlbumRepository.save(album).subscribe((album) => {
     res.status(201).json({message: 'Added album'});
+  }, err => {
+    res.staus(500).json({message: 'Error' + err });
   })
 }
+
+// Get Albums
+module.exports.getAlbums = (req, res) => {
+  AlbumRepository.find().subscribe((albums) => {
+    res.json(albums);
+  }, (err) => {
+    res.status(500).json({message: 'Error' + err });
+  })
+}
+
+// Get Single Album
+module.exports.getAlbum = (req, res) => {
+  AlbumRepository.findById(req.params.id).subscribe((album) => {
+    res.json(album)
+  }, (err) => {
+    res.status(500).json({message: `Error ${err}`})
+  })
+}
+
+
 
 // Update Album
 module.exports.updateAlbum = (req, res) => {
@@ -79,22 +63,19 @@ module.exports.updateAlbum = (req, res) => {
   if (!req.body.producer) {res.status(400).json({message: "enter a producer"}); return;}
   if (!req.body.artist) {res.status(400).json({message: "enter a artist"}); return;}
 
-  Album.update({_id: req.params.id}, req.body, (err, album) => {
-    if (err) {
-      res.status(500).json({message: `Error ${err}`});
-      return;
-    }
+  AlbumRepository.update(req.params.id, req.body).subscribe((album) => {
     res.status(201).json({message: `Updated Album ${req.body.title}`});
-  })
+  }, err => {
+    res.status(500).json({message: `Error ${err}`});
+  });
 }
 
 // Delete Album
 module.exports.deleteAlbum = (req, res) => {
-  Album.remove({_id: req.params.id}, (err, album) => {
-    if (err) {
-      res.status(500).json({message: `Error: ${err}`});
-      return;
-    }
-    res.json({message: `Deleted: ${req.params.id}`})
-  })
+
+  AlbumRepository.delete(req.params.id).subscribe((album) => {
+    res.json({message: `Deleted: ${req.params.id}`});
+  }, err => {
+    res.status(500).json({message: `Error: ${err}`});
+  });
 }
