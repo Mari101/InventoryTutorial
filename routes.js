@@ -19,5 +19,5 @@ module.exports = (app) => {
 }
 
 
-// CRUD for albums
-// CRUD for users
+// CRUD for Albums
+// CRUD for Users
