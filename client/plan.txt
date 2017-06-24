@@ -1,0 +1,24 @@
+Components
+
+Login
+Register
+Users
+Albums
+
+===========================
+Pages
+
+Splash
+  Login, Register
+
+Users
+
+Albums
+
+Single Album
+
+==============================
+Steps
+
+Login to App
+Show Albums

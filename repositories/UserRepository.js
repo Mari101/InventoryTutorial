@@ -17,19 +17,7 @@ class UserRepository extends BaseRepository {
     return super.save(newUser);
   }
 
-  // Login
-  findOne(email, body) {
-    return Rx.Observable.create(observer => {
-      User.findOne({email: body.email}, (err, user) => {
-        if (err) {
-          observer.error(err);
-        } else {
-          observer.next(user);
-          observer.complete();
-        }
-      })
-    });
-  }
+
 
 }
 

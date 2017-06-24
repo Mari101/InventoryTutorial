@@ -49,6 +49,20 @@ class BaseRepository {
     });
   }
 
+  // findOne
+  findOne(criteria) {
+    return Rx.Observable.create(observer => {
+      this.model.findOne(criteria, (err, user) => {
+        if (err) {
+          observer.error(err);
+        } else {
+          observer.next(user);
+          observer.complete();
+        }
+      })
+    });
+  }
+
   // Update
   update(id, body) {
     return Rx.Observable.create(observer => {

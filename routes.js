@@ -7,7 +7,6 @@ module.exports = (app) => {
     app.put('/albums/:id', albums.updateAlbum);
     app.delete('/albums/:id', albums.deleteAlbum);
 
-
     // Users
     const users = require('./controllers/userController');
     app.post('/register', users.registerUser);

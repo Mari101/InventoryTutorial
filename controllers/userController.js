@@ -42,7 +42,7 @@ module.exports.registerUser = (req, res) => {
 // User Login
 module.exports.login = (req, res) => {
 
-  UserRepository.findOne(req.params.email, req.body).subscribe((user) => {
+  UserRepository.findOne({email: req.body.email}).subscribe((user) => {
     if (!user) {
       res.status(401).json({message: 'Invalid Email or password'});
     }
@@ -52,7 +52,7 @@ module.exports.login = (req, res) => {
       }
       if (user.email == req.body.email && response) {
         const token = jwt.sign({email: req.body.email}, process.env.SECRET);
-        res.status(200).json(token);
+        res.status(200).json({token: token});
       } else {
         res.status(401).json({message: 'Invalid Email or password'});
       }
