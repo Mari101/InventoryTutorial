@@ -1,3 +1,4 @@
+import Rx from 'rxjs/Rx';
 import RxHttp from './RxHttp';
 
 export const TokenManager = {
@@ -12,6 +13,11 @@ export const TokenManager = {
 
   removeToken: () => {
     window.sessionStorage.removeItem('token');
+  },
+
+  hasToken: () => {
+    const token = this.getToken();
+    return token && token !== '';
   }
 };
 
@@ -20,21 +26,36 @@ class InventoryClient {
     this.client = new RxHttp('http://localhost:7000');
   }
 
-  login(credentials) {
-    return this.client.post('/login', credentials).map(response => response.data);
-  }
-
-  getUsers() {
-    return this.client.get('/users', {
+  getHeader() {
+    return {
       headers: {
         Authorization: `Bearer ${TokenManager.getToken()}`
       }
-    }).map(response => response.data);
+    };
+  }
+
+  get(path) {
+    return this.client.get(path, this.getHeader()).map(response => response.data);
+  }
+
+  login(credentials) {
+    return this.client.post('/login', credentials).flatMap(res => {
+      if (res.status != 200) {
+        return Rx.Observable.throw(new Error(res.data.message));
+      }
+      return Rx.Observable.of(res);
+    })
+    .map(response => response.data);
+  }
+
+  getUsers() {
+    return this.get('/users');
+  }
+
+  getAlbums() {
+    return this.get('/albums');
   }
 }
-
-
-
 
 
 export default InventoryClient;
