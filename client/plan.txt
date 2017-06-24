@@ -21,4 +21,6 @@ Single Album
 Steps
 
 Login to App
+Logout of App
+
 Show Albums

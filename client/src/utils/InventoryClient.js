@@ -1,26 +1,32 @@
 import Rx from 'rxjs/Rx';
 import RxHttp from './RxHttp';
 
+// Object to handle the session token sent at login
 export const TokenManager = {
 
+  // Set Token to session on Login
   setToken: (token) => {
     window.sessionStorage.setItem('token', token);
   },
 
+  // Retreive token during a session
   getToken: () => {
     return window.sessionStorage.getItem('token');
   },
 
+  // Delete token on logout
   removeToken: () => {
     window.sessionStorage.removeItem('token');
   },
 
+  // Test if there is token
   hasToken: () => {
     const token = this.getToken();
     return token && token !== '';
   }
 };
 
+// Service to make calls to API
 class InventoryClient {
   constructor(){
     this.client = new RxHttp('http://localhost:7000');

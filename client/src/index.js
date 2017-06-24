@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import App from './App';
 import Login from './components/Login';
-import registerServiceWorker from './registerServiceWorker';
 import './index.css';
+import registerServiceWorker from './registerServiceWorker';
 
 const routes = (
   <Router>

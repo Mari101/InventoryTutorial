@@ -1,6 +1,7 @@
 import Rx from 'rxjs/Rx';
 import axios from 'axios';
 
+// Class to abstract axios GET and POST requests
 class RxHttp {
   constructor(baseurl) {
     this.baseurl = baseurl;
@@ -17,7 +18,5 @@ class RxHttp {
     return Rx.Observable.fromPromise(promise);
   }
 }
-
-
 
 export default RxHttp;
