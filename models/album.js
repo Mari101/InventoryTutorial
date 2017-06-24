@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose, { Schema } from 'mongoose';
 
 const AlbumSchema = new Schema({
   title: {
@@ -34,8 +34,8 @@ const AlbumSchema = new Schema({
     required: true
   },
   coverURL: String
-})
+});
 
 const Album = mongoose.model('Album', AlbumSchema, 'albums');
 
-export default Album
+export default Album;

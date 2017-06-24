@@ -5,7 +5,8 @@ import mongoose from 'mongoose';
 // Create Base Repository to template database access
 // This outlines the 'controller callback functions'
 
-// Database queries defined here Defining the CRUD
+// Creating an Observable from database queries.
+// These Observables are subscribed to in the controllers
 
 class BaseRepository {
   constructor(model){
