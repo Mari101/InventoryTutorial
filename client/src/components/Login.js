@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import RxHttp from '../utils/RxHttp';
 import InventoryClient, { TokenManager as tm } from '../utils/InventoryClient';
 
 class Login extends Component {

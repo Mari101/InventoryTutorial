@@ -46,7 +46,7 @@ class InventoryClient {
 
   login(credentials) {
     return this.client.post('/login', credentials).flatMap(res => {
-      if (res.status != 200) {
+      if (res.status !== 200) {
         return Rx.Observable.throw(new Error(res.data.message));
       }
       return Rx.Observable.of(res);
