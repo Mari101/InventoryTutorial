@@ -21,17 +21,20 @@ class BaseRepository {
   // Get All
   find(query) {
   // Create Observable
-    return Rx.Observable.create((observer) => {
-      // Act on Model from constructor
-      this.model.find(query, (err, results) => {
-        if (err) {
-          observer.error(err);
-        } else {
-          observer.next(results);
-          observer.complete();
-        }
-      });
-    });
+    // return Rx.Observable.create((observer) => {
+    //   // Act on Model from constructor
+    //   this.model.find(query, (err, results) => {
+    //     if (err) {
+    //       observer.error(err);
+    //     } else {
+    //       observer.next(results);
+    //       observer.complete();
+    //     }
+    //   });
+    // });
+
+    // Create from promise
+    return Rx.Observable.fromPromise(this.model.find(query));
   }
 
 
