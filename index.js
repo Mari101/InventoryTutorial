@@ -17,7 +17,8 @@ mongoose.connect(process.env.MONGODB, (err) => {
 })
 
 // Start Express App
-const port = process.env.PORT;
+// const port = process.env.PORT;
+const port = 7002
 const app = express();
 
 // Models
@@ -38,8 +39,8 @@ require('./routes')(app);
 
 app.get('/', (req, res) => {
   res.send('Invalid API endpoint');
-})
+});
 
 app.listen(port, () => {
   console.log('App listening on port', port);
-})
+});

@@ -13,11 +13,11 @@ module.exports.registerUser = (req, res) => {
   }
 
   if (!req.body.email) {
-    res.status(400).json({message: 'Enter a Display name'});
+    res.status(400).json({message: 'Enter an Email Address'});
     return;
   }
   if (!req.body.password) {
-    res.status(400).json({message: 'Enter a Display name'});
+    res.status(400).json({message: 'Enter a Password'});
     return;
   }
 
